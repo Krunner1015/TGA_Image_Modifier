@@ -1,0 +1,6 @@
+# ninja log v6
+676	850	7646492808959528	Project_2.exe	ecdf50bfe44af44f
+8	514	7646500665391468	build.ninja	408a52a14fa1899a
+9	675	7646492802294535	CMakeFiles/Project_2.dir/src/main.cpp.obj	f247628aaa818b6f
+3	834	7646506574998066	CMakeFiles/Project_2.dir/src/main.cpp.obj	f247628aaa818b6f
+837	1067	7646506583329549	Project_2.exe	ecdf50bfe44af44f
