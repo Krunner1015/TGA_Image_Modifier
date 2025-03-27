@@ -326,11 +326,19 @@ int main(int argc, char *argv[]) {
         cout << "File does not exist." << endl;
 
     } else {
+        args[0] = "output/" + args[0];
+        args[1] = "input/" + args[1];
         if (args[2] == "multiply") {
             if (args[3].data()) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
-                        cout << "Multiplying " << args[1] << endl;
+                        args[3] = "input/" + args[3];
+                        TGA mult1, mult2;
+                        mult1.read(args[1]);
+                        mult2.read(args[3]);
+                        mult1.Multiply(mult2).write(args[0]);
+
+                        cout << "Multiplied " << args[1] << " and " << args[3] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
