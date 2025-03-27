@@ -196,37 +196,22 @@ int main(int argc, char *argv[]) {
     // for (int i = 1; i < argc; i++) {
     //     cout << i << ": " << argv[i] << endl;
     // }
-    if (argv[1] = "multiply") {
+    vector<string> args;
+    vector<string> validfiles = {
+        "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
+        "layer_blue.tga", "layer_green.tga", "layer_red.tga",
+        "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
+    string tracking = "";
 
-    } else if (argv[1] = "subtract") {
+    for (int i = 1; i < argc; i++) {
+        args[i-1] = static_cast<string>(argv[i]);
+    }
 
-    } else if (argv[1] = "overlay") {
-
-    } else if (argv[1] = "screen") {
-
-    } else if (argv[1] = "combine") {
-
-    } else if (argv[1] = "flip") {
-
-    } else if (argv[1] = "onlyred") {
-
-    } else if (argv[1] = "onlygreen") {
-
-    } else if (argv[1] = "onlyblue") {
-
-    } else if (argv[1] = "addred") {
-
-    } else if (argv[1] = "addgreen") {
-
-    } else if (argv[1] = "addblue") {
-
-    } else if (argv[1] = "scalered") {
-
-    } else if (argv[1] = "scalegreen") {
-
-    } else if (argv[1] = "scaleblue") {
-
-    } else if (argv[1] == "Tasks") {
+    if (argc <= 2 || args[0] == "--help") { //checks for no input or help input
+        cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
+        cout << "Usage:" << endl;
+        cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
+    } else if (args[0] == "Tasks") {
         TGA car, circles, layer1, layer2, layer_blue, layer_green, layer_red, pattern1, pattern2, text, text2;
 
         car.read("input/car.tga");
@@ -327,6 +312,179 @@ int main(int argc, char *argv[]) {
             output10.data[i * 3 + 2] = text2.data[j+2];
         }
         output10.write("output/part10.tga");
+
+    } else if (args[0].size() < 4 || args[0].substr(args[0].size() - 4) != ".tga") {
+        //checks first argument for a correct output file type
+        cout << "Invald file name." << endl;
+
+    } else if (argc <= 3 || args[1].size() < 4 || args[1].substr(args[1].size() - 4) != ".tga") {
+        //checks second argument for a correct input file type
+        cout << "Invald file name." << endl;
+
+    } else if (find(validfiles.begin(), validfiles.end(), args[1]) == validfiles.end()) {
+        //checks that the second inputted file actually exists as an output file
+        cout << "File does not exist." << endl;
+
+    } else {
+        if (args[2] == "multiply") {
+            if (args[3].data()) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                        cout << "Multiplying " << args[1] << endl;
+                    } else {
+                        cout << "Invalid argument, file does not exist." << endl;
+                    }
+                } else {
+                    cout << "Invalid argument, invalid file name." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "subtract") {
+            if (args[3].data()) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                        cout << "Multiplying " << args[1] << endl;
+                    } else {
+                        cout << "Invalid argument, file does not exist." << endl;
+                    }
+                } else {
+                    cout << "Invalid argument, invalid file name." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "overlay") {
+            if (args[3].data() && args[4].data()) {
+                if (args[3].size() >= 4 && args[4].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].substr(args[4].size() - 4) == ".tga") {
+                    if ((find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) && (find(validfiles.begin(), validfiles.end(), args[4]) == validfiles.end())) {
+                        cout << "Multiplying " << args[1] << endl;
+                    } else {
+                        cout << "Invalid argument, file does not exist." << endl;
+                    }
+                } else {
+                    cout << "Invalid argument, invalid file name." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "screen") {
+            if (args[3].data()) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                        cout << "Multiplying " << args[1] << endl;
+                    } else {
+                        cout << "Invalid argument, file does not exist." << endl;
+                    }
+                } else {
+                    cout << "Invalid argument, invalid file name." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "combine") {
+            if (args[3].data()) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                        cout << "Multiplying " << args[1] << endl;
+                    } else {
+                        cout << "Invalid argument, file does not exist." << endl;
+                    }
+                } else {
+                    cout << "Invalid argument, invalid file name." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "flip") {
+            cout << "Flipping " << args[1] << endl;
+        } else if (args[2] == "onlyred") {
+            cout << "Only red " << args[1] << endl;
+        } else if (args[2] == "onlygreen") {
+            cout << "Only green " << args[1] << endl;
+        } else if (args[2] == "onlyblue") {
+            cout << "Only blue " << args[1] << endl;
+        } else if (args[2] == "addred") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    cout << "Int: " << num << endl;
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "addgreen") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    cout << "Int: " << num << endl;
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "addblue") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    cout << "Int: " << num << endl;
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "scalered") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    if (num < 0) {
+                        cout << "Invalid argument, expected a number." << endl;
+                    } else {
+                        cout << "Int: " << num << endl;
+                    }
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "scalegreen") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    if (num < 0) {
+                        cout << "Invalid argument, expected a number." << endl;
+                    } else {
+                        cout << "Int: " << num << endl;
+                    }
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else if (args[2] == "scaleblue") {
+            if (args[3].data()) {
+                try {
+                    int num = atoi(args[3].data());
+                    if (num < 0) {
+                        cout << "Invalid argument, expected a number." << endl;
+                    } else {
+                        cout << "Int: " << num << endl;
+                    }
+                } catch (const invalid_argument &e) {
+                    cout << "Invalid argument, expected a number." << endl;
+                }
+            } else {
+                cout << "Missing argument." << endl;
+            }
+        } else {
+            cout << "Invalid method name." << endl;
+        }
     }
 
     return 0;
