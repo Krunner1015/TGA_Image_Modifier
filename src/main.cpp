@@ -192,11 +192,41 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-    cout << "You inputted " << argc - 1 << " arguments." << endl;
-    for (int i = 1; i < argc; i++) {
-        cout << i << ": " << argv[i] << endl;
-    }
-    if (argc > 1 && argv[1] == "Tasks") {
+    // cout << "You inputted " << argc - 1 << " arguments." << endl;
+    // for (int i = 1; i < argc; i++) {
+    //     cout << i << ": " << argv[i] << endl;
+    // }
+    if (argv[1] = "multiply") {
+
+    } else if (argv[1] = "subtract") {
+
+    } else if (argv[1] = "overlay") {
+
+    } else if (argv[1] = "screen") {
+
+    } else if (argv[1] = "combine") {
+
+    } else if (argv[1] = "flip") {
+
+    } else if (argv[1] = "onlyred") {
+
+    } else if (argv[1] = "onlygreen") {
+
+    } else if (argv[1] = "onlyblue") {
+
+    } else if (argv[1] = "addred") {
+
+    } else if (argv[1] = "addgreen") {
+
+    } else if (argv[1] = "addblue") {
+
+    } else if (argv[1] = "scalered") {
+
+    } else if (argv[1] = "scalegreen") {
+
+    } else if (argv[1] = "scaleblue") {
+
+    } else if (argv[1] == "Tasks") {
         TGA car, circles, layer1, layer2, layer_blue, layer_green, layer_red, pattern1, pattern2, text, text2;
 
         car.read("input/car.tga");
