@@ -328,7 +328,7 @@ int main(int argc, char *argv[]) {
         string output = "C:/Users/kaide/CLionProjects/Project_2/output/" + args[0];
         string input = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[1];
         if (args[2] == "multiply") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
@@ -348,7 +348,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "subtract") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
@@ -368,10 +368,16 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "overlay") {
-            if (args[3].data() && args[4].data()) {
-                if (args[3].size() >= 4 && args[4].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].substr(args[4].size() - 4) == ".tga") {
-                    if ((find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) && (find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end())) {
-                        cout << "Multiplying " << args[1] << endl;
+            if (args.size() == 4) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        TGA ovr1, ovr2;
+                        ovr1.read(input);
+                        ovr2.read(input2);
+                        ovr1.Overlay(ovr2).write(output);
+
+                        cout << "Overlaying " << args[1] << " and " << args[3] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
@@ -382,7 +388,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "screen") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
@@ -396,7 +402,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "combine") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
@@ -419,7 +425,7 @@ int main(int argc, char *argv[]) {
             cout << "Only blue " << args[1] << endl;
         } else if (args[2] == "addred") {
             cout << "addred" << endl;
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -430,7 +436,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "addgreen") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -441,7 +447,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "addblue") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -452,7 +458,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scalered") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
@@ -467,7 +473,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scalegreen") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
@@ -482,7 +488,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scaleblue") {
-            if (args.size() >= 4) {
+            if (args.size() == 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
