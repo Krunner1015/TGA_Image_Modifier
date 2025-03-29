@@ -436,6 +436,18 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "flip") {
+            TGA result, inp;
+            inp.read(input);
+            result = inp;
+            int pixelCount = inp.data.size() / 3;
+            for (int i = 0; i < pixelCount; i++) {
+                int j = (pixelCount - i - 1) * 3;
+                result.data[i * 3] = inp.data[j];
+                result.data[i * 3 + 1] = inp.data[j+1];
+                result.data[i * 3 + 2] = inp.data[j+2];
+            }
+            result.write(output);
+
             cout << "Flipping " << args[1] << endl;
         } else if (args[2] == "onlyred") {
             cout << "Only red " << args[1] << endl;
