@@ -450,11 +450,44 @@ int main(int argc, char *argv[]) {
 
             cout << "Flipping " << args[1] << endl;
         } else if (args[2] == "onlyred") {
-            cout << "Only red " << args[1] << endl;
+            TGA result, inp;
+            inp.read(input);
+            result = inp;
+            for (int i = 0; i < inp.data.size(); i += 3) {
+                unsigned char P3 = static_cast<unsigned char>(inp.data[i+2]);
+                result.data[i] = P3;
+                result.data[i+1] = P3;
+                result.data[i+2] = P3;
+            }
+            result.write(output);
+
+            cout << "Only red of " << args[1] << endl;
         } else if (args[2] == "onlygreen") {
-            cout << "Only green " << args[1] << endl;
+            TGA result, inp;
+            inp.read(input);
+            result = inp;
+            for (int i = 0; i < inp.data.size(); i += 3) {
+                unsigned char P2 = static_cast<unsigned char>(inp.data[i+1]);
+                result.data[i] = P2;
+                result.data[i+1] = P2;
+                result.data[i+2] = P2;
+            }
+            result.write(output);
+
+            cout << "Only green of " << args[1] << endl;
         } else if (args[2] == "onlyblue") {
-            cout << "Only blue " << args[1] << endl;
+            TGA result, inp;
+            inp.read(input);
+            result = inp;
+            for (int i = 0; i < inp.data.size(); i += 3) {
+                unsigned char P1 = static_cast<unsigned char>(inp.data[i]);
+                result.data[i] = P1;
+                result.data[i+1] = P1;
+                result.data[i+2] = P1;
+            }
+            result.write(output);
+
+            cout << "Only blue of " << args[1] << endl;
         } else if (args[2] == "addred") {
             cout << "addred" << endl;
             if (args.size() == 4) {
