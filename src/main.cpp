@@ -512,7 +512,7 @@ int main(int argc, char *argv[]) {
                     result.write(output);
 
                     cout << "Added " << num << " to the red of " << args[1] << endl;
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
@@ -541,7 +541,7 @@ int main(int argc, char *argv[]) {
                     result.write(output);
 
                     cout << "Added " << num << " to the green of " << args[1] << endl;
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
@@ -570,7 +570,7 @@ int main(int argc, char *argv[]) {
                     result.write(output);
 
                     cout << "Added " << num << " to the blue of " << args[1] << endl;
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
@@ -603,7 +603,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Scaling the red of " << args[1] << " by " << num << endl;
                     }
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
@@ -636,7 +636,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Scaling the green of " << args[1] << " by " << num << endl;
                     }
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
@@ -669,7 +669,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Scaling the blue of " << args[1] << " by " << num << endl;
                     }
-                } catch (const invalid_argument &e) {
+                } catch (const invalid_argument&) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
             } else {
