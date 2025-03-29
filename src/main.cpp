@@ -377,7 +377,7 @@ int main(int argc, char *argv[]) {
                         ovr2.read(input2);
                         ovr1.Overlay(ovr2).write(output);
 
-                        cout << "Overlaying " << args[1] << " and " << args[3] << endl;
+                        cout << "Overlaying " << args[1] << " onto " << args[3] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
@@ -397,7 +397,7 @@ int main(int argc, char *argv[]) {
                         scr2.read(input2);
                         scr2.Screen(scr1).write(output);
 
-                        cout << "Screening " << args[1] << " and " << args[3] << endl;
+                        cout << "Screening " << args[3] << " onto " << args[1] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
@@ -408,10 +408,24 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "combine") {
-            if (args.size() == 4) {
-                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        cout << "Multiplying " << args[1] << endl;
+            if (args.size() == 5) {
+                if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
+                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        string input3 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[4];
+                        TGA combb, combg, combr, result;
+                        combb.read(input3);
+                        combg.read(input2);
+                        combr.read(input);
+                        result = combr;
+                        for (int i = 0; i < combb.data.size(); i++) {
+                            if (i % 3 == 0) result.data[i] = combb.data[i];
+                            if (i % 3 == 1) result.data[i] = combg.data[i];
+                            if (i % 3 == 2) result.data[i] = combr.data[i];
+                        }
+                        result.write(output);
+
+                        cout << "Combining " << args[4] << " (Blue), " << args[3] << " (Green), and " << args[1] << " (Red)" << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
