@@ -391,7 +391,13 @@ int main(int argc, char *argv[]) {
             if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        cout << "Multiplying " << args[1] << endl;
+                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        TGA scr1, scr2;
+                        scr1.read(input);
+                        scr2.read(input2);
+                        scr2.Screen(scr1).write(output);
+
+                        cout << "Screening " << args[1] << " and " << args[3] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
