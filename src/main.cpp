@@ -350,8 +350,14 @@ int main(int argc, char *argv[]) {
         } else if (args[2] == "subtract") {
             if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
-                        cout << "Multiplying " << args[1] << endl;
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        TGA subt1, subt2;
+                        subt1.read(input);
+                        subt2.read(input2);
+                        subt1.Subtract(subt2).write(output);
+
+                        cout << "Subtracting " << args[1] << " and " << args[3] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
                     }
@@ -364,7 +370,7 @@ int main(int argc, char *argv[]) {
         } else if (args[2] == "overlay") {
             if (args[3].data() && args[4].data()) {
                 if (args[3].size() >= 4 && args[4].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].substr(args[4].size() - 4) == ".tga") {
-                    if ((find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) && (find(validfiles.begin(), validfiles.end(), args[4]) == validfiles.end())) {
+                    if ((find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) && (find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end())) {
                         cout << "Multiplying " << args[1] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
@@ -378,7 +384,7 @@ int main(int argc, char *argv[]) {
         } else if (args[2] == "screen") {
             if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
@@ -392,7 +398,7 @@ int main(int argc, char *argv[]) {
         } else if (args[2] == "combine") {
             if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
                     } else {
                         cout << "Invalid argument, file does not exist." << endl;
