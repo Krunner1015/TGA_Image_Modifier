@@ -584,6 +584,24 @@ int main(int argc, char *argv[]) {
                         cout << "Invalid argument, expected a number." << endl;
                     } else {
                         cout << "Int: " << num << endl;
+
+                        TGA result;
+                        result.read(input);
+                        for (int i = 0; i < result.data.size(); i += 3) {
+                            unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
+
+                            int valr = static_cast<int>(P1) * num;
+                            if (valr < 0) {
+                                valr = 0;
+                            } else if (valr > 255) {
+                                valr = 255;
+                            }
+
+                            result.data[i+2] = static_cast<unsigned char>(valr);
+                        }
+                        result.write(output);
+
+                        cout << "Scaling the red of " << args[1] << " by " << num << endl;
                     }
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
@@ -599,6 +617,24 @@ int main(int argc, char *argv[]) {
                         cout << "Invalid argument, expected a number." << endl;
                     } else {
                         cout << "Int: " << num << endl;
+
+                        TGA result;
+                        result.read(input);
+                        for (int i = 0; i < result.data.size(); i += 3) {
+                            unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
+
+                            int valg = static_cast<int>(P1) * num;
+                            if (valg < 0) {
+                                valg = 0;
+                            } else if (valg > 255) {
+                                valg = 255;
+                            }
+
+                            result.data[i+1] = static_cast<unsigned char>(valg);
+                        }
+                        result.write(output);
+
+                        cout << "Scaling the green of " << args[1] << " by " << num << endl;
                     }
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
@@ -614,6 +650,24 @@ int main(int argc, char *argv[]) {
                         cout << "Invalid argument, expected a number." << endl;
                     } else {
                         cout << "Int: " << num << endl;
+
+                        TGA result;
+                        result.read(input);
+                        for (int i = 0; i < result.data.size(); i += 3) {
+                            unsigned char P1 = static_cast<unsigned char>(result.data[i]);
+
+                            int valb = static_cast<int>(P1) * num;
+                            if (valb < 0) {
+                                valb = 0;
+                            } else if (valb > 255) {
+                                valb = 255;
+                            }
+
+                            result.data[i] = static_cast<unsigned char>(valb);
+                        }
+                        result.write(output);
+
+                        cout << "Scaling the blue of " << args[1] << " by " << num << endl;
                     }
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
