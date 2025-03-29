@@ -192,22 +192,19 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-    // cout << "You inputted " << argc - 1 << " arguments." << endl;
-    // for (int i = 1; i < argc; i++) {
-    //     cout << i << ": " << argv[i] << endl;
-    // }
-    vector<string> args;
+    vector<string> args(argv + 1, argv + argc);
     vector<string> validfiles = {
         "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
         "layer_blue.tga", "layer_green.tga", "layer_red.tga",
         "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
     string tracking = "";
 
-    for (int i = 1; i < argc; i++) {
-        args[i-1] = static_cast<string>(argv[i]);
+    cout << "You inputted " << args.size() << " arguments." << endl;
+    for (int i = 0; i < args.size(); i++) {
+        cout << i + 1 << ": " << args[i] << endl;
     }
 
-    if (argc <= 2 || args[0] == "--help") { //checks for no input or help input
+    if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
         cout << "Usage:" << endl;
         cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
@@ -313,6 +310,8 @@ int main(int argc, char *argv[]) {
         }
         output10.write("output/part10.tga");
 
+        cout << "Tasks complete!" << endl;
+
     } else if (args[0].size() < 4 || args[0].substr(args[0].size() - 4) != ".tga") {
         //checks first argument for a correct output file type
         cout << "Invald file name." << endl;
@@ -329,9 +328,9 @@ int main(int argc, char *argv[]) {
         args[0] = "output/" + args[0];
         args[1] = "input/" + args[1];
         if (args[2] == "multiply") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                    if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
+                    if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                         args[3] = "input/" + args[3];
                         TGA mult1, mult2;
                         mult1.read(args[1]);
@@ -349,7 +348,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "subtract") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
@@ -377,7 +376,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "screen") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
@@ -391,7 +390,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "combine") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) == validfiles.end()) {
                         cout << "Multiplying " << args[1] << endl;
@@ -413,7 +412,8 @@ int main(int argc, char *argv[]) {
         } else if (args[2] == "onlyblue") {
             cout << "Only blue " << args[1] << endl;
         } else if (args[2] == "addred") {
-            if (args[3].data()) {
+            cout << "addred" << endl;
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -424,7 +424,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "addgreen") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -435,7 +435,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "addblue") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
@@ -446,7 +446,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scalered") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
@@ -461,7 +461,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scalegreen") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
@@ -476,7 +476,7 @@ int main(int argc, char *argv[]) {
                 cout << "Missing argument." << endl;
             }
         } else if (args[2] == "scaleblue") {
-            if (args[3].data()) {
+            if (args.size() >= 4) {
                 try {
                     int num = atoi(args[3].data());
                     if (num < 0) {
