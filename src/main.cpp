@@ -494,6 +494,24 @@ int main(int argc, char *argv[]) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
+
+                        int val = static_cast<int>(P1) + num;
+                        if (val < 0) {
+                            val = 0;
+                        } else if (val > 255) {
+                            val = 255;
+                        }
+
+                        result.data[i+2] = static_cast<unsigned char>(val);
+                    }
+                    result.write(output);
+
+                    cout << "Added " << num << " to the red of " << args[1] << endl;
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
@@ -505,6 +523,24 @@ int main(int argc, char *argv[]) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
+
+                        int val = static_cast<int>(P1) + num;
+                        if (val < 0) {
+                            val = 0;
+                        } else if (val > 255) {
+                            val = 255;
+                        }
+
+                        result.data[i+1] = static_cast<unsigned char>(val);
+                    }
+                    result.write(output);
+
+                    cout << "Added " << num << " to the green of " << args[1] << endl;
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
@@ -516,6 +552,24 @@ int main(int argc, char *argv[]) {
                 try {
                     int num = atoi(args[3].data());
                     cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i]);
+
+                        int val = static_cast<int>(P1) + num;
+                        if (val < 0) {
+                            val = 0;
+                        } else if (val > 255) {
+                            val = 255;
+                        }
+
+                        result.data[i] = static_cast<unsigned char>(val);
+                    }
+                    result.write(output);
+
+                    cout << "Added " << num << " to the blue of " << args[1] << endl;
                 } catch (const invalid_argument &e) {
                     cout << "Invalid argument, expected a number." << endl;
                 }
