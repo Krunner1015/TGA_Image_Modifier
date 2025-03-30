@@ -196,15 +196,15 @@ int main(int argc, char *argv[]) {
         "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
     TGA tracking;
 
-    if (argc <= 2 || args[0] == "--help") { //checks for no input or help input
+    if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
         cout << "Usage:" << endl;
         cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
     } else {
-        cout << "You inputted " << args.size() << " arguments." << endl;
-        for (int i = 0; i < args.size(); i++) {
-            cout << i + 1 << ": " << args[i] << endl;
-        }
+        // cout << "You inputted " << args.size() << " arguments." << endl;
+        // for (int i = 0; i < args.size(); i++) {
+        //     cout << i + 1 << ": " << args[i] << endl;
+        // }
 
         if (args[0] == "Tasks") {
             TGA car, circles, layer1, layer2, layer_blue, layer_green, layer_red, pattern1, pattern2, text, text2;
