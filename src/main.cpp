@@ -4,6 +4,11 @@
 #include <algorithm>
 using namespace std;
 
+vector<string> validfiles = {
+    "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
+    "layer_blue.tga", "layer_green.tga", "layer_red.tga",
+    "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
+
 //color data is in BGR not RGB!!!
 
 struct Header {
@@ -188,12 +193,362 @@ public:
     }
 };
 
+void processImage(const string &method, const vector<string> &args, const string &output, const string &input) {
+    if (args[2] == "multiply") {
+        if (args.size() == 4) {
+            if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                    string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                    TGA mult1, mult2;
+                    mult1.read(input);
+                    mult2.read(input2);
+                    mult1.Multiply(mult2).write(output);
+
+                    cout << "Multiplied " << args[1] << " and " << args[3] << endl;
+                } else {
+                    cout << "Invalid argument, file does not exist." << endl;
+                }
+            } else {
+                cout << "Invalid argument, invalid file name." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "subtract") {
+        if (args.size() == 4) {
+            if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                    string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                    TGA subt1, subt2;
+                    subt1.read(input);
+                    subt2.read(input2);
+                    subt1.Subtract(subt2).write(output);
+
+                    cout << "Subtracting " << args[1] << " and " << args[3] << endl;
+                } else {
+                    cout << "Invalid argument, file does not exist." << endl;
+                }
+            } else {
+                cout << "Invalid argument, invalid file name." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "overlay") {
+        if (args.size() == 4) {
+            if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                    string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                    TGA ovr1, ovr2;
+                    ovr1.read(input);
+                    ovr2.read(input2);
+                    ovr1.Overlay(ovr2).write(output);
+
+                    cout << "Overlaying " << args[1] << " onto " << args[3] << endl;
+                } else {
+                    cout << "Invalid argument, file does not exist." << endl;
+                }
+            } else {
+                cout << "Invalid argument, invalid file name." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "screen") {
+        if (args.size() == 4) {
+            if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
+                if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                    string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                    TGA scr1, scr2;
+                    scr1.read(input);
+                    scr2.read(input2);
+                    scr2.Screen(scr1).write(output);
+
+                    cout << "Screening " << args[3] << " onto " << args[1] << endl;
+                } else {
+                    cout << "Invalid argument, file does not exist." << endl;
+                }
+            } else {
+                cout << "Invalid argument, invalid file name." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "combine") {
+        if (args.size() == 5) {
+            if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
+                if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
+                    string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                    string input3 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[4];
+                    TGA combb, combg, combr, result;
+                    combb.read(input3);
+                    combg.read(input2);
+                    combr.read(input);
+                    result = combr;
+                    for (int i = 0; i < combb.data.size(); i++) {
+                        if (i % 3 == 0) result.data[i] = combb.data[i];
+                        if (i % 3 == 1) result.data[i] = combg.data[i];
+                        if (i % 3 == 2) result.data[i] = combr.data[i];
+                    }
+                    result.write(output);
+
+                    cout << "Combining " << args[4] << " (Blue), " << args[3] << " (Green), and " << args[1] << " (Red)" << endl;
+                } else {
+                    cout << "Invalid argument, file does not exist." << endl;
+                }
+            } else {
+                cout << "Invalid argument, invalid file name." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "flip") {
+        TGA result, inp;
+        inp.read(input);
+        result = inp;
+        int pixelCount = inp.data.size() / 3;
+        for (int i = 0; i < pixelCount; i++) {
+            int j = (pixelCount - i - 1) * 3;
+            result.data[i * 3] = inp.data[j];
+            result.data[i * 3 + 1] = inp.data[j+1];
+            result.data[i * 3 + 2] = inp.data[j+2];
+        }
+        result.write(output);
+
+        cout << "Flipping " << args[1] << endl;
+    } else if (args[2] == "onlyred") {
+        TGA result, inp;
+        inp.read(input);
+        result = inp;
+        for (int i = 0; i < inp.data.size(); i += 3) {
+            unsigned char P3 = static_cast<unsigned char>(inp.data[i+2]);
+            result.data[i] = P3;
+            result.data[i+1] = P3;
+            result.data[i+2] = P3;
+        }
+        result.write(output);
+
+        cout << "Only red of " << args[1] << endl;
+    } else if (args[2] == "onlygreen") {
+        TGA result, inp;
+        inp.read(input);
+        result = inp;
+        for (int i = 0; i < inp.data.size(); i += 3) {
+            unsigned char P2 = static_cast<unsigned char>(inp.data[i+1]);
+            result.data[i] = P2;
+            result.data[i+1] = P2;
+            result.data[i+2] = P2;
+        }
+        result.write(output);
+
+        cout << "Only green of " << args[1] << endl;
+    } else if (args[2] == "onlyblue") {
+        TGA result, inp;
+        inp.read(input);
+        result = inp;
+        for (int i = 0; i < inp.data.size(); i += 3) {
+            unsigned char P1 = static_cast<unsigned char>(inp.data[i]);
+            result.data[i] = P1;
+            result.data[i+1] = P1;
+            result.data[i+2] = P1;
+        }
+        result.write(output);
+
+        cout << "Only blue of " << args[1] << endl;
+    } else if (args[2] == "addred") {
+        cout << "addred" << endl;
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                cout << "Int: " << num << endl;
+
+                TGA result;
+                result.read(input);
+                for (int i = 0; i < result.data.size(); i += 3) {
+                    unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
+
+                    int val = static_cast<int>(P1) + num;
+                    if (val < 0) {
+                        val = 0;
+                    } else if (val > 255) {
+                        val = 255;
+                    }
+
+                    result.data[i+2] = static_cast<unsigned char>(val);
+                }
+                result.write(output);
+
+                cout << "Added " << num << " to the red of " << args[1] << endl;
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "addgreen") {
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                cout << "Int: " << num << endl;
+
+                TGA result;
+                result.read(input);
+                for (int i = 0; i < result.data.size(); i += 3) {
+                    unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
+
+                    int val = static_cast<int>(P1) + num;
+                    if (val < 0) {
+                        val = 0;
+                    } else if (val > 255) {
+                        val = 255;
+                    }
+
+                    result.data[i+1] = static_cast<unsigned char>(val);
+                }
+                result.write(output);
+
+                cout << "Added " << num << " to the green of " << args[1] << endl;
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "addblue") {
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                cout << "Int: " << num << endl;
+
+                TGA result;
+                result.read(input);
+                for (int i = 0; i < result.data.size(); i += 3) {
+                    unsigned char P1 = static_cast<unsigned char>(result.data[i]);
+
+                    int val = static_cast<int>(P1) + num;
+                    if (val < 0) {
+                        val = 0;
+                    } else if (val > 255) {
+                        val = 255;
+                    }
+
+                    result.data[i] = static_cast<unsigned char>(val);
+                }
+                result.write(output);
+
+                cout << "Added " << num << " to the blue of " << args[1] << endl;
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "scalered") {
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                if (num < 0) {
+                    cout << "Invalid argument, expected a number." << endl;
+                } else {
+                    cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
+
+                        int valr = static_cast<int>(P1) * num;
+                        if (valr < 0) {
+                            valr = 0;
+                        } else if (valr > 255) {
+                            valr = 255;
+                        }
+
+                        result.data[i+2] = static_cast<unsigned char>(valr);
+                    }
+                    result.write(output);
+
+                    cout << "Scaling the red of " << args[1] << " by " << num << endl;
+                }
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "scalegreen") {
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                if (num < 0) {
+                    cout << "Invalid argument, expected a number." << endl;
+                } else {
+                    cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
+
+                        int valg = static_cast<int>(P1) * num;
+                        if (valg < 0) {
+                            valg = 0;
+                        } else if (valg > 255) {
+                            valg = 255;
+                        }
+
+                        result.data[i+1] = static_cast<unsigned char>(valg);
+                    }
+                    result.write(output);
+
+                    cout << "Scaling the green of " << args[1] << " by " << num << endl;
+                }
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else if (args[2] == "scaleblue") {
+        if (args.size() == 4) {
+            try {
+                int num = atoi(args[3].data());
+                if (num < 0) {
+                    cout << "Invalid argument, expected a number." << endl;
+                } else {
+                    cout << "Int: " << num << endl;
+
+                    TGA result;
+                    result.read(input);
+                    for (int i = 0; i < result.data.size(); i += 3) {
+                        unsigned char P1 = static_cast<unsigned char>(result.data[i]);
+
+                        int valb = static_cast<int>(P1) * num;
+                        if (valb < 0) {
+                            valb = 0;
+                        } else if (valb > 255) {
+                            valb = 255;
+                        }
+
+                        result.data[i] = static_cast<unsigned char>(valb);
+                    }
+                    result.write(output);
+
+                    cout << "Scaling the blue of " << args[1] << " by " << num << endl;
+                }
+            } catch (const invalid_argument&) {
+                cout << "Invalid argument, expected a number." << endl;
+            }
+        } else {
+            cout << "Missing argument." << endl;
+        }
+    } else {
+        cout << "Invalid method name." << endl;
+    }
+}
+
 int main(int argc, char *argv[]) {
     vector<string> args(argv + 1, argv + argc);
-    vector<string> validfiles = {
-        "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
-        "layer_blue.tga", "layer_green.tga", "layer_red.tga",
-        "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
     TGA tracking;
 
     if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
@@ -325,361 +680,7 @@ int main(int argc, char *argv[]) {
         } else {
             string output = "C:/Users/kaide/CLionProjects/Project_2/output/" + args[0];
             string input = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[1];
-            if (args[2] == "multiply") {
-                if (args.size() == 4) {
-                    if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                        if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                            TGA mult1, mult2;
-                            mult1.read(input);
-                            mult2.read(input2);
-                            tracking = mult1.Multiply(mult2);
-                            tracking.write(output);
 
-                            cout << "Multiplied " << args[1] << " and " << args[3] << endl;
-                        } else {
-                            cout << "Invalid argument, file does not exist." << endl;
-                        }
-                    } else {
-                        cout << "Invalid argument, invalid file name." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "subtract") {
-                if (args.size() == 4) {
-                    if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                        if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                            TGA subt1, subt2;
-                            subt1.read(input);
-                            subt2.read(input2);
-                            tracking = subt1.Subtract(subt2);
-                            tracking.write(output);
-
-                            cout << "Subtracting " << args[1] << " and " << args[3] << endl;
-                        } else {
-                            cout << "Invalid argument, file does not exist." << endl;
-                        }
-                    } else {
-                        cout << "Invalid argument, invalid file name." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "overlay") {
-                if (args.size() == 4) {
-                    if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                        if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                            TGA ovr1, ovr2;
-                            ovr1.read(input);
-                            ovr2.read(input2);
-                            tracking = ovr1.Overlay(ovr2);
-                            tracking.write(output);
-
-                            cout << "Overlaying " << args[1] << " onto " << args[3] << endl;
-                        } else {
-                            cout << "Invalid argument, file does not exist." << endl;
-                        }
-                    } else {
-                        cout << "Invalid argument, invalid file name." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "screen") {
-                if (args.size() == 4) {
-                    if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                        if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                            TGA scr1, scr2;
-                            scr1.read(input);
-                            scr2.read(input2);
-                            tracking = scr2.Screen(scr1);
-                            tracking.write(output);
-
-                            cout << "Screening " << args[3] << " onto " << args[1] << endl;
-                        } else {
-                            cout << "Invalid argument, file does not exist." << endl;
-                        }
-                    } else {
-                        cout << "Invalid argument, invalid file name." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "combine") {
-                if (args.size() == 5) {
-                    if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
-                        if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
-                            string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                            string input3 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[4];
-                            TGA combb, combg, combr, result;
-                            combb.read(input3);
-                            combg.read(input2);
-                            combr = tracking;
-                            result = combr;
-                            for (int i = 0; i < combb.data.size(); i++) {
-                                if (i % 3 == 0) result.data[i] = combb.data[i];
-                                if (i % 3 == 1) result.data[i] = combg.data[i];
-                                if (i % 3 == 2) result.data[i] = combr.data[i];
-                            }
-                            result.write(output);
-
-                            cout << "Combining " << args[4] << " (Blue), " << args[3] << " (Green), and " << args[1] << " (Red)" << endl;
-                        } else {
-                            cout << "Invalid argument, file does not exist." << endl;
-                        }
-                    } else {
-                        cout << "Invalid argument, invalid file name." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "flip") {
-                TGA result, inp;
-                inp.read(input);
-                result = inp;
-                int pixelCount = inp.data.size() / 3;
-                for (int i = 0; i < pixelCount; i++) {
-                    int j = (pixelCount - i - 1) * 3;
-                    result.data[i * 3] = inp.data[j];
-                    result.data[i * 3 + 1] = inp.data[j+1];
-                    result.data[i * 3 + 2] = inp.data[j+2];
-                }
-                result.write(output);
-
-                cout << "Flipping " << args[1] << endl;
-            } else if (args[2] == "onlyred") {
-                TGA result, inp;
-                inp.read(input);
-                result = inp;
-                for (int i = 0; i < inp.data.size(); i += 3) {
-                    unsigned char P3 = static_cast<unsigned char>(inp.data[i+2]);
-                    result.data[i] = P3;
-                    result.data[i+1] = P3;
-                    result.data[i+2] = P3;
-                }
-                result.write(output);
-
-                cout << "Only red of " << args[1] << endl;
-            } else if (args[2] == "onlygreen") {
-                TGA result, inp;
-                inp.read(input);
-                result = inp;
-                for (int i = 0; i < inp.data.size(); i += 3) {
-                    unsigned char P2 = static_cast<unsigned char>(inp.data[i+1]);
-                    result.data[i] = P2;
-                    result.data[i+1] = P2;
-                    result.data[i+2] = P2;
-                }
-                result.write(output);
-
-                cout << "Only green of " << args[1] << endl;
-            } else if (args[2] == "onlyblue") {
-                TGA result, inp;
-                inp.read(input);
-                result = inp;
-                for (int i = 0; i < inp.data.size(); i += 3) {
-                    unsigned char P1 = static_cast<unsigned char>(inp.data[i]);
-                    result.data[i] = P1;
-                    result.data[i+1] = P1;
-                    result.data[i+2] = P1;
-                }
-                result.write(output);
-
-                cout << "Only blue of " << args[1] << endl;
-            } else if (args[2] == "addred") {
-                cout << "addred" << endl;
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        cout << "Int: " << num << endl;
-
-                        TGA result;
-                        result.read(input);
-                        for (int i = 0; i < result.data.size(); i += 3) {
-                            unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
-
-                            int val = static_cast<int>(P1) + num;
-                            if (val < 0) {
-                                val = 0;
-                            } else if (val > 255) {
-                                val = 255;
-                            }
-
-                            result.data[i+2] = static_cast<unsigned char>(val);
-                        }
-                        result.write(output);
-
-                        cout << "Added " << num << " to the red of " << args[1] << endl;
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "addgreen") {
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        cout << "Int: " << num << endl;
-
-                        TGA result;
-                        result.read(input);
-                        for (int i = 0; i < result.data.size(); i += 3) {
-                            unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
-
-                            int val = static_cast<int>(P1) + num;
-                            if (val < 0) {
-                                val = 0;
-                            } else if (val > 255) {
-                                val = 255;
-                            }
-
-                            result.data[i+1] = static_cast<unsigned char>(val);
-                        }
-                        result.write(output);
-
-                        cout << "Added " << num << " to the green of " << args[1] << endl;
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "addblue") {
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        cout << "Int: " << num << endl;
-
-                        TGA result;
-                        result.read(input);
-                        for (int i = 0; i < result.data.size(); i += 3) {
-                            unsigned char P1 = static_cast<unsigned char>(result.data[i]);
-
-                            int val = static_cast<int>(P1) + num;
-                            if (val < 0) {
-                                val = 0;
-                            } else if (val > 255) {
-                                val = 255;
-                            }
-
-                            result.data[i] = static_cast<unsigned char>(val);
-                        }
-                        result.write(output);
-
-                        cout << "Added " << num << " to the blue of " << args[1] << endl;
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "scalered") {
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
-                        } else {
-                            cout << "Int: " << num << endl;
-
-                            TGA result;
-                            result.read(input);
-                            for (int i = 0; i < result.data.size(); i += 3) {
-                                unsigned char P1 = static_cast<unsigned char>(result.data[i+2]);
-
-                                int valr = static_cast<int>(P1) * num;
-                                if (valr < 0) {
-                                    valr = 0;
-                                } else if (valr > 255) {
-                                    valr = 255;
-                                }
-
-                                result.data[i+2] = static_cast<unsigned char>(valr);
-                            }
-                            result.write(output);
-
-                            cout << "Scaling the red of " << args[1] << " by " << num << endl;
-                        }
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "scalegreen") {
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
-                        } else {
-                            cout << "Int: " << num << endl;
-
-                            TGA result;
-                            result.read(input);
-                            for (int i = 0; i < result.data.size(); i += 3) {
-                                unsigned char P1 = static_cast<unsigned char>(result.data[i+1]);
-
-                                int valg = static_cast<int>(P1) * num;
-                                if (valg < 0) {
-                                    valg = 0;
-                                } else if (valg > 255) {
-                                    valg = 255;
-                                }
-
-                                result.data[i+1] = static_cast<unsigned char>(valg);
-                            }
-                            result.write(output);
-
-                            cout << "Scaling the green of " << args[1] << " by " << num << endl;
-                        }
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else if (args[2] == "scaleblue") {
-                if (args.size() == 4) {
-                    try {
-                        int num = atoi(args[3].data());
-                        if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
-                        } else {
-                            cout << "Int: " << num << endl;
-
-                            TGA result;
-                            result.read(input);
-                            for (int i = 0; i < result.data.size(); i += 3) {
-                                unsigned char P1 = static_cast<unsigned char>(result.data[i]);
-
-                                int valb = static_cast<int>(P1) * num;
-                                if (valb < 0) {
-                                    valb = 0;
-                                } else if (valb > 255) {
-                                    valb = 255;
-                                }
-
-                                result.data[i] = static_cast<unsigned char>(valb);
-                            }
-                            result.write(output);
-
-                            cout << "Scaling the blue of " << args[1] << " by " << num << endl;
-                        }
-                    } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
-                    }
-                } else {
-                    cout << "Missing argument." << endl;
-                }
-            } else {
-                cout << "Invalid method name." << endl;
-            }
         }
     }
 
