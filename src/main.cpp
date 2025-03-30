@@ -193,8 +193,45 @@ public:
     }
 };
 
+int numconvert(const string &num) {
+    transform(num.begin(), num.end(), num.begin(), ::tolower);
+    if (num == "zero") {
+        return 0;
+    }
+    if (num == "one") {
+        return 1;
+    }
+    if (num == "two") {
+        return 2;
+    }
+    if (num == "three") {
+        return 3;
+    }
+    if (num == "four") {
+        return 4;
+    }
+    if (num == "five") {
+        return 5;
+    }
+    if (num == "six") {
+        return 6;
+    }
+    if (num == "seven") {
+        return 7;
+    }
+    if (num == "eight") {
+        return 8;
+    }
+    if (num == "nine") {
+        return 9;
+    }
+    if (num == "ten") {
+        return 10;
+    }
+}
+
 void processImage(const string &method, const vector<string> &args, const string &output, const string &input) {
-    if (args[2] == "multiply") {
+    if (method == "multiply") {
         if (args.size() == 4) {
             if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                 if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
@@ -214,7 +251,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "subtract") {
+    } else if (method == "subtract") {
         if (args.size() == 4) {
             if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                 if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
@@ -234,7 +271,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "overlay") {
+    } else if (method == "overlay") {
         if (args.size() == 4) {
             if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                 if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
@@ -254,7 +291,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "screen") {
+    } else if (method == "screen") {
         if (args.size() == 4) {
             if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                 if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
@@ -274,7 +311,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "combine") {
+    } else if (method == "combine") {
         if (args.size() == 5) {
             if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
                 if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
@@ -302,7 +339,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "flip") {
+    } else if (method == "flip") {
         TGA result, inp;
         inp.read(input);
         result = inp;
@@ -316,7 +353,7 @@ void processImage(const string &method, const vector<string> &args, const string
         result.write(output);
 
         cout << "Flipping " << args[1] << endl;
-    } else if (args[2] == "onlyred") {
+    } else if (method == "onlyred") {
         TGA result, inp;
         inp.read(input);
         result = inp;
@@ -329,7 +366,7 @@ void processImage(const string &method, const vector<string> &args, const string
         result.write(output);
 
         cout << "Only red of " << args[1] << endl;
-    } else if (args[2] == "onlygreen") {
+    } else if (method == "onlygreen") {
         TGA result, inp;
         inp.read(input);
         result = inp;
@@ -342,7 +379,7 @@ void processImage(const string &method, const vector<string> &args, const string
         result.write(output);
 
         cout << "Only green of " << args[1] << endl;
-    } else if (args[2] == "onlyblue") {
+    } else if (method == "onlyblue") {
         TGA result, inp;
         inp.read(input);
         result = inp;
@@ -355,7 +392,7 @@ void processImage(const string &method, const vector<string> &args, const string
         result.write(output);
 
         cout << "Only blue of " << args[1] << endl;
-    } else if (args[2] == "addred") {
+    } else if (method == "addred") {
         cout << "addred" << endl;
         if (args.size() == 4) {
             try {
@@ -385,7 +422,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "addgreen") {
+    } else if (method == "addgreen") {
         if (args.size() == 4) {
             try {
                 int num = atoi(args[3].data());
@@ -414,7 +451,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "addblue") {
+    } else if (method == "addblue") {
         if (args.size() == 4) {
             try {
                 int num = atoi(args[3].data());
@@ -443,7 +480,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "scalered") {
+    } else if (method == "scalered") {
         if (args.size() == 4) {
             try {
                 int num = atoi(args[3].data());
@@ -476,7 +513,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "scalegreen") {
+    } else if (method == "scalegreen") {
         if (args.size() == 4) {
             try {
                 int num = atoi(args[3].data());
@@ -509,7 +546,7 @@ void processImage(const string &method, const vector<string> &args, const string
         } else {
             cout << "Missing argument." << endl;
         }
-    } else if (args[2] == "scaleblue") {
+    } else if (method == "scaleblue") {
         if (args.size() == 4) {
             try {
                 int num = atoi(args[3].data());
@@ -680,6 +717,8 @@ int main(int argc, char *argv[]) {
         } else {
             string output = "C:/Users/kaide/CLionProjects/Project_2/output/" + args[0];
             string input = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[1];
+
+
 
         }
     }
