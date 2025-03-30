@@ -314,13 +314,13 @@ int main(int argc, char *argv[]) {
             //checks first argument for a correct output file type
             cout << "Invalid file name." << endl;
 
+        } else if (find(validfiles.begin(), validfiles.end(), args[1]) == validfiles.end()) {
+            //checks that the second inputted file actually exists as an output file
+            cout << "File does not exist." << endl;
+
         } else if (argc <= 3 || args[1].size() < 4 || args[1].substr(args[1].size() - 4) != ".tga") {
             //checks second argument for a correct input file type
             cout << "Invalid file name." << endl;
-
-        } else if (find(validfiles.begin(), validfiles.end(), args[2]) == validfiles.end()) {
-            //checks that the second inputted file actually exists as an output file
-            cout << "File does not exist." << endl;
 
         } else {
             string output = "output/" + args[0];
