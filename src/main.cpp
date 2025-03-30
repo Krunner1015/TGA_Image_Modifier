@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <regex>
+#include <sstream>
 using namespace std;
 
 vector<string> validfiles = {
@@ -228,6 +230,41 @@ int numconvert(const string &num) {
     if (num == "ten") {
         return 10;
     }
+    return 0;
+}
+
+vector<pair<string, vector<string>>> parseInput(const vector<string> &words) {
+    vector<pair<string, vector<string>>> commands;
+    string currentCommand;
+    vector<string> args;
+    regex fileRegex(".*\\.tga");
+
+    for (const auto &word : words) {
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
+
+        if (word == "multiply" || word == "subtract" || word == "overlay" || word == "screen" || word == "combine" || word == "flip" || word == "only" || word == "add" || word == "scale") {
+            if (!currentCommand.empty()) {
+                commands.emplace_back(currentCommand, args);
+                args.clear();
+            }
+            currentCommand = word;
+        } else if (regex_match(word, fileRegex)) {
+            args.push_back(word);
+        } else if (isdigit(word[0]) || word.find_first_of("0123456789") != string::npos) {
+            args.push_back(word);
+        } else if (word == "red" || word == "green" || word == "blue") {
+            args.push_back(word);
+        } else if (word == "times" || word == "then" || word == "and") {
+        } else {
+            cout << "Unrecognized keyword: " << word << endl;
+        }
+    }
+
+    if (!currentCommand.empty()) {
+        commands.emplace_back(currentCommand, args);
+    }
+
+    return commands;
 }
 
 void processImage(const string &method, const vector<string> &args, const string &output, const string &input) {
@@ -717,7 +754,6 @@ int main(int argc, char *argv[]) {
         } else {
             string output = "C:/Users/kaide/CLionProjects/Project_2/output/" + args[0];
             string input = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[1];
-
 
 
         }
