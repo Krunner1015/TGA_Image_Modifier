@@ -201,10 +201,10 @@ int main(int argc, char *argv[]) {
         cout << "Usage:" << endl;
         cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
     } else {
-        // cout << "You inputted " << args.size() << " arguments." << endl;
-        // for (int i = 0; i < args.size(); i++) {
-        //     cout << i + 1 << ": " << args[i] << endl;
-        // }
+        cout << "You inputted " << args.size() << " arguments." << endl;
+        for (int i = 0; i < args.size(); i++) {
+            cout << i + 1 << ": " << args[i] << endl;
+        }
 
         if (args[0] == "Tasks") {
             TGA car, circles, layer1, layer2, layer_blue, layer_green, layer_red, pattern1, pattern2, text, text2;
@@ -312,11 +312,11 @@ int main(int argc, char *argv[]) {
 
         } else if (args[0].size() < 4 || args[0].substr(args[0].size() - 4) != ".tga") {
             //checks first argument for a correct output file type
-            cout << "Invald file name." << endl;
+            cout << "Invalid file name." << endl;
 
         } else if (argc <= 3 || args[1].size() < 4 || args[1].substr(args[1].size() - 4) != ".tga") {
             //checks second argument for a correct input file type
-            cout << "Invald file name." << endl;
+            cout << "Invalid file name." << endl;
 
         } else if (find(validfiles.begin(), validfiles.end(), args[1]) == validfiles.end()) {
             //checks that the second inputted file actually exists as an output file
