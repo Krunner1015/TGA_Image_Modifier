@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <cstring>
 #include <algorithm>
 using namespace std;
 
@@ -33,8 +32,7 @@ public:
     void read(const string &path) {
         ifstream file(path, ios::binary);
         if (!file.is_open()) {
-            cerr << "Error opening file " << path << endl;
-            exit(1);
+            throw std::runtime_error("Error opening file " + path);
         }
 
         file.read(&header.idLength, sizeof(header.idLength));
@@ -59,8 +57,7 @@ public:
     void write(const string &path) {
         ofstream file(path, ios::binary);
         if (!file.is_open()) {
-            cerr << "Error opening file " << path << endl;
-            exit(1);
+            throw std::runtime_error("Error opening file " + path);
         }
 
         file.write(&header.idLength, sizeof(header.idLength));
@@ -197,7 +194,7 @@ int main(int argc, char *argv[]) {
         "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
         "layer_blue.tga", "layer_green.tga", "layer_red.tga",
         "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
-    string tracking = "";
+    TGA tracking;
 
     cout << "You inputted " << args.size() << " arguments." << endl;
     for (int i = 0; i < args.size(); i++) {
@@ -335,7 +332,8 @@ int main(int argc, char *argv[]) {
                         TGA mult1, mult2;
                         mult1.read(input);
                         mult2.read(input2);
-                        mult1.Multiply(mult2).write(output);
+                        tracking = mult1.Multiply(mult2);
+                        tracking.write(output);
 
                         cout << "Multiplied " << args[1] << " and " << args[3] << endl;
                     } else {
@@ -355,7 +353,8 @@ int main(int argc, char *argv[]) {
                         TGA subt1, subt2;
                         subt1.read(input);
                         subt2.read(input2);
-                        subt1.Subtract(subt2).write(output);
+                        tracking = subt1.Subtract(subt2);
+                        tracking.write(output);
 
                         cout << "Subtracting " << args[1] << " and " << args[3] << endl;
                     } else {
@@ -375,7 +374,8 @@ int main(int argc, char *argv[]) {
                         TGA ovr1, ovr2;
                         ovr1.read(input);
                         ovr2.read(input2);
-                        ovr1.Overlay(ovr2).write(output);
+                        tracking = ovr1.Overlay(ovr2);
+                        tracking.write(output);
 
                         cout << "Overlaying " << args[1] << " onto " << args[3] << endl;
                     } else {
@@ -395,7 +395,8 @@ int main(int argc, char *argv[]) {
                         TGA scr1, scr2;
                         scr1.read(input);
                         scr2.read(input2);
-                        scr2.Screen(scr1).write(output);
+                        tracking = scr2.Screen(scr1);
+                        tracking.write(output);
 
                         cout << "Screening " << args[3] << " onto " << args[1] << endl;
                     } else {
@@ -416,7 +417,7 @@ int main(int argc, char *argv[]) {
                         TGA combb, combg, combr, result;
                         combb.read(input3);
                         combg.read(input2);
-                        combr.read(input);
+                        combr = tracking;
                         result = combr;
                         for (int i = 0; i < combb.data.size(); i++) {
                             if (i % 3 == 0) result.data[i] = combb.data[i];
