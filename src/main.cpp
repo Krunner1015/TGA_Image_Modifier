@@ -322,13 +322,13 @@ int main(int argc, char *argv[]) {
         cout << "File does not exist." << endl;
 
     } else {
-        string output = "C:/Users/kaide/CLionProjects/Project_2/output/" + args[0];
-        string input = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[1];
+        string output = "output/" + args[0];
+        string input = "input/" + args[1];
         if (args[2] == "multiply") {
             if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        string input2 = "input/" + args[3];
                         TGA mult1, mult2;
                         mult1.read(input);
                         mult2.read(input2);
@@ -349,7 +349,7 @@ int main(int argc, char *argv[]) {
             if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        string input2 = "input/" + args[3];
                         TGA subt1, subt2;
                         subt1.read(input);
                         subt2.read(input2);
@@ -370,7 +370,7 @@ int main(int argc, char *argv[]) {
             if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        string input2 = "input/" + args[3];
                         TGA ovr1, ovr2;
                         ovr1.read(input);
                         ovr2.read(input2);
@@ -391,7 +391,7 @@ int main(int argc, char *argv[]) {
             if (args.size() == 4) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
+                        string input2 = "input/" + args[3];
                         TGA scr1, scr2;
                         scr1.read(input);
                         scr2.read(input2);
@@ -412,8 +412,8 @@ int main(int argc, char *argv[]) {
             if (args.size() == 5) {
                 if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
                     if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
-                        string input2 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[3];
-                        string input3 = "C:/Users/kaide/CLionProjects/Project_2/input/" + args[4];
+                        string input2 = "input/" + args[3];
+                        string input3 = "input/" + args[4];
                         TGA combb, combg, combr, result;
                         combb.read(input3);
                         combg.read(input2);
