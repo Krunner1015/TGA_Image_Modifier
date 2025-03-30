@@ -191,9 +191,9 @@ public:
 int main(int argc, char *argv[]) {
     vector<string> args(argv + 1, argv + argc);
     vector<string> validfiles = {
-        "car.tga", "circles.tga", "layer1.tga", "layer2.tga",
-        "layer_blue.tga", "layer_green.tga", "layer_red.tga",
-        "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
+        "input/car.tga", "input/circles.tga", "input/layer1.tga", "input/layer2.tga",
+        "input/layer_blue.tga", "input/layer_green.tga", "input/layer_red.tga",
+        "input/pattern1.tga", "input/pattern2.tga", "input/text.tga", "input/text2.tga"};
     TGA tracking;
 
     if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
@@ -324,12 +324,12 @@ int main(int argc, char *argv[]) {
 
         } else {
             string output = "output/" + args[0];
-            string input = "input/" + args[1];
+            string input = args[1];
             if (args[2] == "multiply") {
                 if (args.size() == 4) {
                     if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                         if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "input/" + args[3];
+                            string input2 = args[3];
                             TGA mult1, mult2;
                             mult1.read(input);
                             mult2.read(input2);
@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
                 if (args.size() == 4) {
                     if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                         if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "input/" + args[3];
+                            string input2 = args[3];
                             TGA subt1, subt2;
                             subt1.read(input);
                             subt2.read(input2);
@@ -371,7 +371,7 @@ int main(int argc, char *argv[]) {
                 if (args.size() == 4) {
                     if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                         if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "input/" + args[3];
+                            string input2 = args[3];
                             TGA ovr1, ovr2;
                             ovr1.read(input);
                             ovr2.read(input2);
@@ -392,7 +392,7 @@ int main(int argc, char *argv[]) {
                 if (args.size() == 4) {
                     if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                         if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
-                            string input2 = "input/" + args[3];
+                            string input2 = args[3];
                             TGA scr1, scr2;
                             scr1.read(input);
                             scr2.read(input2);
@@ -413,8 +413,8 @@ int main(int argc, char *argv[]) {
                 if (args.size() == 5) {
                     if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
                         if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
-                            string input2 = "input/" + args[3];
-                            string input3 = "input/" + args[4];
+                            string input2 = args[3];
+                            string input3 = args[4];
                             TGA combb, combg, combr, result;
                             combb.read(input3);
                             combg.read(input2);
