@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
         "pattern1.tga", "pattern2.tga", "text.tga", "text2.tga"};
     TGA tracking;
 
-    if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
+    if (argc <= 2 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
         cout << "Usage:" << endl;
         cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
