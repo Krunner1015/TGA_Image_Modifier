@@ -493,10 +493,11 @@ int main(int argc, char *argv[]) {
 
                 cout << "Only blue of " << args[1] << endl;
             } else if (args[2] == "addred") {
-                cout << "addred" << endl;
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
+                        if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                         cout << "Int: " << num << endl;
 
                         TGA result;
@@ -517,7 +518,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Added " << num << " to the red of " << args[1] << endl;
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
@@ -525,7 +526,9 @@ int main(int argc, char *argv[]) {
             } else if (args[2] == "addgreen") {
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
+                        if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                         cout << "Int: " << num << endl;
 
                         TGA result;
@@ -546,7 +549,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Added " << num << " to the green of " << args[1] << endl;
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
@@ -554,7 +557,9 @@ int main(int argc, char *argv[]) {
             } else if (args[2] == "addblue") {
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
+                        if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                         cout << "Int: " << num << endl;
 
                         TGA result;
@@ -575,7 +580,7 @@ int main(int argc, char *argv[]) {
 
                         cout << "Added " << num << " to the blue of " << args[1] << endl;
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
@@ -583,9 +588,10 @@ int main(int argc, char *argv[]) {
             } else if (args[2] == "scalered") {
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
                         if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
+                            cout << "Invalid argument, expected number." << endl;
                         } else {
                             cout << "Int: " << num << endl;
 
@@ -608,7 +614,7 @@ int main(int argc, char *argv[]) {
                             cout << "Scaling the red of " << args[1] << " by " << num << endl;
                         }
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
@@ -616,9 +622,10 @@ int main(int argc, char *argv[]) {
             } else if (args[2] == "scalegreen") {
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
                         if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
+                            cout << "Invalid argument, expected number." << endl;
                         } else {
                             cout << "Int: " << num << endl;
 
@@ -641,7 +648,7 @@ int main(int argc, char *argv[]) {
                             cout << "Scaling the green of " << args[1] << " by " << num << endl;
                         }
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
@@ -649,9 +656,10 @@ int main(int argc, char *argv[]) {
             } else if (args[2] == "scaleblue") {
                 if (args.size() == 4) {
                     try {
+                        if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                         int num = atoi(args[3].data());
                         if (num < 0) {
-                            cout << "Invalid argument, expected a number." << endl;
+                            cout << "Invalid argument, expected number." << endl;
                         } else {
                             cout << "Int: " << num << endl;
 
@@ -674,7 +682,7 @@ int main(int argc, char *argv[]) {
                             cout << "Scaling the blue of " << args[1] << " by " << num << endl;
                         }
                     } catch (const invalid_argument&) {
-                        cout << "Invalid argument, expected a number." << endl;
+                        cout << "Invalid argument, expected number." << endl;
                     }
                 } else {
                     cout << "Missing argument." << endl;
