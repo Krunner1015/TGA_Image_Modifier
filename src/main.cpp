@@ -188,6 +188,16 @@ public:
     }
 };
 
+bool isInteger(const std::string &s) {
+    if (s.empty()) return false;
+    size_t start = 0;
+    if (s[0] == '-') {
+        if (s.size() == 1) return false; // A single '-' is not a valid number
+        start = 1;
+    }
+    return all_of(s.begin() + start, s.end(), ::isdigit);
+}
+
 int main(int argc, char *argv[]) {
     vector<string> args(argv + 1, argv + argc);
     vector<string> validfiles = {
@@ -331,11 +341,16 @@ int main(int argc, char *argv[]) {
         } else {
             TGA tracking;
             int num;
-            string output = "output/" + args[0];
+            string output;
+            if (args[0].size() >= 7 && args[0].substr(0, 7) == "output/") {
+                output = args[0];
+            } else {
+                output = "output/" + args[0];
+            }
             while (args.size() > 2) {
                 string input = args[1];
                 if (args[2] == "multiply") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                             if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                                 string input2 = args[3];
@@ -358,7 +373,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "subtract") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                             if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                                 string input2 = args[3];
@@ -381,7 +396,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "overlay") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                             if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                                 string input2 = args[3];
@@ -404,7 +419,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "screen") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
                             if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
                                 string input2 = args[3];
@@ -427,7 +442,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "combine") {
-                    if (args.size() == 5) {
+                    if (args.size() >= 5) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
                             if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
                                 string input2 = args[3];
@@ -505,11 +520,10 @@ int main(int argc, char *argv[]) {
 
                     cout << "Only blue of " << args[1] << endl;
                 } else if (args[2] == "addred") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
-                            if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
+                            if (!isInteger(args[3])) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
-                            if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                             cout << "Int: " << num << endl;
 
                             tracking.read(input);
@@ -536,11 +550,10 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "addgreen") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
-                            if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
+                            if (!isInteger(args[3])) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
-                            if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                             cout << "Int: " << num << endl;
 
                             tracking.read(input);
@@ -567,11 +580,10 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "addblue") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
-                            if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
+                            if (!isInteger(args[3])) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
-                            if (num == 0) {cout << "Invalid argument, expected number." << endl; return 0;}
                             cout << "Int: " << num << endl;
 
                             tracking.read(input);
@@ -598,7 +610,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "scalered") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
                             if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
@@ -633,7 +645,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "scalegreen") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
                             if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
@@ -668,7 +680,7 @@ int main(int argc, char *argv[]) {
                         return 0;
                     }
                 } else if (args[2] == "scaleblue") {
-                    if (args.size() == 4) {
+                    if (args.size() >= 4 || find(validCommands.begin(), validCommands.end(), args[3]) != validCommands.end()) {
                         try {
                             if (!all_of(args[3].begin(), args[3].end(), ::isdigit)) {cout << "Invalid argument, expected number." << endl; return 0;}
                             num = atoi(args[3].data());
@@ -710,16 +722,17 @@ int main(int argc, char *argv[]) {
                     if (find(singleCommands.begin(), singleCommands.end(), args[2]) != singleCommands.end()) {
                         //zero inputs after command
                         cout << "single command" << endl;
-                        args.erase(args.begin() + 2);
+                        args.erase(args.begin() + 1);
                     } else if (args[2] == "combine") {
                         //two inputs after command
                         cout << "combine command" << endl;
-                        args.erase(args.begin() + 2);
-                    } else if (find(validfiles.begin(), validfiles.end(), args[2]) != validfiles.end()) {
+                        args.erase(args.begin() + 1, args.begin() + 3);
+
+                    } else {
                         //one input after command
                         cout << "greater than one command" << endl;
+                        args.erase(args.begin() + 1);
                         args.erase(args.begin() + 2);
-                        args.erase(args.begin() + 3);
                     }
                     args.insert(args.begin() + 2, output);
                     args.erase(args.begin() + 1);
