@@ -340,6 +340,7 @@ int main(int argc, char *argv[]) {
 
         } else {
             TGA tracking;
+            tracking.read(args[1]);
             int num;
             string output;
             if (args[0].size() >= 7 && args[0].substr(0, 7) == "output/") {
@@ -726,8 +727,9 @@ int main(int argc, char *argv[]) {
                     } else if (args[2] == "combine") {
                         //two inputs after command
                         cout << "combine command" << endl;
-                        args.erase(args.begin() + 1, args.begin() + 3);
-
+                        args.erase(args.begin());
+                        args.erase(args.begin() + 1);
+                        args.erase(args.begin() + 2);
                     } else {
                         //one input after command
                         cout << "greater than one command" << endl;
