@@ -198,11 +198,12 @@ int main(int argc, char *argv[]) {
         "multiply", "subtract", "overlay", "screen", "combine",
         "flip", "onlyred", "onlygreen", "onlyblue", "addred",
         "addgreen", "addblue", "scalered", "scalegreen", "scaleblue"};
+    vector<string> singleCommands = {"flip", "onlyred", "onlygreen", "onlyblue"};
 
     if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
         cout << "Usage:" << endl;
-        cout << "   ./project2.out [output] [firstImage] [method] [...]" << endl;
+        cout << "\t./project2.out [output] [firstImage] [method] [...]" << endl;
     } else {
         cout << "You inputted " << args.size() << " arguments." << endl;
         for (int i = 0; i < args.size(); i++) {
@@ -330,8 +331,8 @@ int main(int argc, char *argv[]) {
         } else {
             TGA tracking;
             int num;
+            string output = "output/" + args[0];
             while (args.size() > 2) {
-                string output = "output/" + args[0];
                 string input = args[1];
                 if (args[2] == "multiply") {
                     if (args.size() == 4) {
@@ -705,18 +706,28 @@ int main(int argc, char *argv[]) {
                     cout << "Invalid method name." << endl;
                     return 0;
                 }
-                if (args.size() > 3) {
-                    int argsnum = atoi(args[3].data());
-                    if (argsnum == num || find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                if (args.size() > 2) {
+                    if (find(singleCommands.begin(), singleCommands.end(), args[2]) != singleCommands.end()) {
+                        //zero inputs after command
+                        cout << "single command" << endl;
+                        args.erase(args.begin() + 2);
+                    } else if (args[2] == "combine") {
+                        //two inputs after command
+                        cout << "combine command" << endl;
+                        args.erase(args.begin() + 2);
+                    } else if (find(validfiles.begin(), validfiles.end(), args[2]) != validfiles.end()) {
+                        //one input after command
+                        cout << "greater than one command" << endl;
                         args.erase(args.begin() + 2);
                         args.erase(args.begin() + 3);
-                    } else {args.erase(args.begin() + 2);}
+                    }
                     args.insert(args.begin() + 2, output);
                     args.erase(args.begin() + 1);
                     for (int i = 0; i < args.size(); i++) {
                         cout << args[i] << " ";
                     }
-                } else if (args.size() < 3 || (args.size() == 3 && args[2] == output)) {
+                    cout << endl;
+                } else if (args.size() < 2 || (args.size() == 2 && args[1] == output)) {
                     return 0;
                 }
                 tracking.write(output);
