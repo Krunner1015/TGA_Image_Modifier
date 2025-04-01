@@ -200,15 +200,12 @@ bool isInteger(const std::string &s) {
 
 int main(int argc, char *argv[]) {
     vector<string> args(argv + 1, argv + argc);
-    vector<string> validfiles = {
-        "input/car.tga", "input/circles.tga", "input/layer1.tga", "input/layer2.tga",
-        "input/layer_blue.tga", "input/layer_green.tga", "input/layer_red.tga",
-        "input/pattern1.tga", "input/pattern2.tga", "input/text.tga", "input/text2.tga"};
     vector<string> validCommands = {
         "multiply", "subtract", "overlay", "screen", "combine",
         "flip", "onlyred", "onlygreen", "onlyblue", "addred",
         "addgreen", "addblue", "scalered", "scalegreen", "scaleblue"};
     vector<string> singleCommands = {"flip", "onlyred", "onlygreen", "onlyblue"};
+    ifstream inputfile(args[1], ios::binary);
 
     if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
@@ -334,8 +331,8 @@ int main(int argc, char *argv[]) {
             //checks second argument for a correct input file type
             cout << "Invalid file name." << endl;
 
-        } else if (find(validfiles.begin(), validfiles.end(), args[1]) == validfiles.end()) {
-            //checks that the second inputted file actually exists as an output file
+        } else if (!inputfile.is_open()) {
+            //checks that the second inputted file actually exists as an input file
             cout << "File does not exist." << endl;
 
         } else {
@@ -353,7 +350,8 @@ int main(int argc, char *argv[]) {
                 if (args[2] == "multiply") {
                     if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                            if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                            ifstream inputfile2(args[3], ios::binary);
+                            if (inputfile2.is_open()) {
                                 string input2 = args[3];
                                 TGA mult1, mult2;
                                 mult1.read(input);
@@ -376,7 +374,8 @@ int main(int argc, char *argv[]) {
                 } else if (args[2] == "subtract") {
                     if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                            if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                            ifstream inputfile2(args[3], ios::binary);
+                            if (inputfile2.is_open()) {
                                 string input2 = args[3];
                                 TGA subt1, subt2;
                                 subt1.read(input);
@@ -399,7 +398,8 @@ int main(int argc, char *argv[]) {
                 } else if (args[2] == "overlay") {
                     if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                            if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                            ifstream inputfile2(args[3], ios::binary);
+                            if (inputfile2.is_open()) {
                                 string input2 = args[3];
                                 TGA ovr1, ovr2;
                                 ovr1.read(input);
@@ -422,7 +422,8 @@ int main(int argc, char *argv[]) {
                 } else if (args[2] == "screen") {
                     if (args.size() >= 4) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga") {
-                            if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end()) {
+                            ifstream inputfile2(args[3], ios::binary);
+                            if (inputfile2.is_open()) {
                                 string input2 = args[3];
                                 TGA scr1, scr2;
                                 scr1.read(input);
@@ -445,7 +446,9 @@ int main(int argc, char *argv[]) {
                 } else if (args[2] == "combine") {
                     if (args.size() >= 5) {
                         if (args[3].size() >= 4 && args[3].substr(args[3].size() - 4) == ".tga" && args[4].size() >= 4 && args[4].substr(args[4].size() - 4) == ".tga") {
-                            if (find(validfiles.begin(), validfiles.end(), args[3]) != validfiles.end() && find(validfiles.begin(), validfiles.end(), args[4]) != validfiles.end()) {
+                            ifstream inputfile2(args[3], ios::binary);
+                            ifstream inputfile3(args[4], ios::binary);
+                            if (inputfile2.is_open() && inputfile3.is_open()) {
                                 string input2 = args[3];
                                 string input3 = args[4];
                                 TGA combb, combg, combr;
