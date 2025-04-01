@@ -205,7 +205,6 @@ int main(int argc, char *argv[]) {
         "flip", "onlyred", "onlygreen", "onlyblue", "addred",
         "addgreen", "addblue", "scalered", "scalegreen", "scaleblue"};
     vector<string> singleCommands = {"flip", "onlyred", "onlygreen", "onlyblue"};
-    ifstream inputfile(args[1], ios::binary);
 
     if (argc <= 1 || args[0] == "--help") { //checks for no input or help input
         cout << "Project 2: Image Processing, Spring 2025" << endl << endl;
@@ -322,6 +321,8 @@ int main(int argc, char *argv[]) {
             cout << "Tasks complete!" << endl;
 
         }
+
+        ifstream inputfile(args[1], ios::binary);
 
         if (args.size() < 2 || args[0].size() < 4 || args[0].substr(args[0].size() - 4) != ".tga") {
             //checks first argument for a correct output file type
